@@ -31,7 +31,18 @@ export default function ProductPage() {
           />
           {' '}Pay AED 10 Advance 
         </label>
+        
       </div>
     </div>
   );
 }
+<button
+  onClick={() => {
+    localStorage.setItem('payment_option', payment);
+    alert('Payment option saved: ' + payment);
+  }}
+  style={{ marginTop: 20, padding: 10 }}
+>
+  Save Payment Option
+</button>
+
