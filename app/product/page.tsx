@@ -1,48 +1,55 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
+import { useState } from "react";
 
 export default function ProductPage() {
-  const [payment, setPayment] = useState<'cod' | 'deposit'>('cod');
+  const [payment, setPayment] = useState<"cod" | "deposit">("cod");
+
+  const savePaymentOption = () => {
+    localStorage.setItem("payment_option", payment);
+    alert("Payment option saved: " + payment);
+  };
 
   return (
-    <div style={{ padding: 40 }}>
+    <div style={{ padding: 30 }}>
       <h1>Product Page</h1>
 
-      <div style={{ border: '1px solid #ccc', padding: 15, marginTop: 20 }}>
+      <div style={{ marginTop: 20 }}>
         <h3>Payment Option</h3>
 
-        <label style={{ display: 'block', marginBottom: 8 }}>
+        <label style={{ display: "block", marginBottom: 10 }}>
           <input
             type="radio"
             name="payment"
-            checked={payment === 'cod'}
-            onChange={() => setPayment('cod')}
+            value="cod"
+            checked={payment === "cod"}
+            onChange={() => setPayment("cod")}
           />
-          {' '}Full Cash on Delivery
+          {" "}Full Cash on Delivery
         </label>
 
-        <label style={{ display: 'block' }}>
+        <label style={{ display: "block", marginBottom: 10 }}>
           <input
             type="radio"
             name="payment"
-            checked={payment === 'deposit'}
-            onChange={() => setPayment('deposit')}
+            value="deposit"
+            checked={payment === "deposit"}
+            onChange={() => setPayment("deposit")}
           />
-          {' '}Pay AED 10 Advance 
+          {" "}Pay AED 10 Advance 
         </label>
-        
+
+        <button
+          onClick={savePaymentOption}
+          style={{
+            marginTop: 20,
+            padding: "10px 20px",
+            cursor: "pointer"
+          }}
+        >
+          Save Payment Option
+        </button>
       </div>
     </div>
   );
 }
-<button
-  onClick={() => {
-    localStorage.setItem('payment_option', payment);
-    alert('Payment option saved: ' + payment);
-  }}
-  style={{ marginTop: 20, padding: 10 }}
->
-  Save Payment Option
-</button>
-
