@@ -29,7 +29,7 @@ export default function ProductPage() {
             checked={payment === 'deposit'}
             onChange={() => setPayment('deposit')}
           />
-          {' '}Pay AED 10 Deposit (Non-Refundable)
+          {' '}Pay AED 10 Advance 
         </label>
       </div>
     </div>
