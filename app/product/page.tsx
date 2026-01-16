@@ -5,10 +5,19 @@ import { useState } from "react";
 export default function ProductPage() {
   const [payment, setPayment] = useState<"cod" | "deposit">("cod");
 
-  const savePaymentOption = () => {
-    localStorage.setItem("payment_option", payment);
-    alert("Payment option saved: " + payment);
-  };
+ const savePaymentOption = async () => {
+  localStorage.setItem("payment_option", payment);
+
+  await fetch("/api/cart", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      payment_option: payment,
+    }),
+  });
+
+  alert("Payment option saved: " + payment);
+};
 
   return (
     <div style={{ padding: 30 }}>
