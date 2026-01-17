@@ -17,7 +17,6 @@ const deposit = {
       return;
     }
 
-    // Render UI
     root.innerHTML = `
       <div style="
         border:1px solid #e5e5e5;
@@ -32,30 +31,50 @@ const deposit = {
         </strong>
 
         <label style="display:block;margin-bottom:6px;cursor:pointer">
-          <input type="radio"
-                 name="habshi_payment_option"
-                 value="cod"
-                 checked />
+          <input
+            type="radio"
+            name="habshi_payment_option"
+            value="cod"
+            checked
+          />
           Full Cash on Delivery
         </label>
 
         <label style="display:block;cursor:pointer">
-          <input type="radio"
-                 name="habshi_payment_option"
-                 value="advance" />
+          <input
+            type="radio"
+            name="habshi_payment_option"
+            value="advance"
+          />
           Pay AED ${deposit.amount} Advance
         </label>
       </div>
     `;
 
-    // Default save
+    function setCartAttribute(value) {
+      fetch('/cart/update.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          attributes: {
+            habshi_payment: value
+          }
+        })
+      }).then(() => {
+        console.log('Cart attribute set:', value);
+      });
+    }
+
+    // defaults
     localStorage.setItem("habshi_payment_option", "cod");
     localStorage.setItem("habshi_deposit_amount", deposit.amount);
+    setCartAttribute("cod");
 
     // Listen changes
     root.addEventListener("change", (e) => {
       if (e.target.name === "habshi_payment_option") {
         localStorage.setItem("habshi_payment_option", e.target.value);
+        setCartAttribute(e.target.value);
 
         console.log(
           "Habshi Payment Selected:",
@@ -67,9 +86,5 @@ const deposit = {
     });
   }
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", mount);
-  } else {
-    mount();
-  }
+  document.addEventListener("DOMContentLoaded", mount);
 })();
